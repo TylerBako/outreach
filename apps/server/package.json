@@ -5,6 +5,7 @@
   "license": "MIT",
   "source": "src/index.js",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.3",
