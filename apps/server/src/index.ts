@@ -14,6 +14,6 @@ app.get('/', (_: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
 
-app.listen(PORT, () => {
+app.listen(Number(PORT), '127.0.0.1', () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`)
 })
