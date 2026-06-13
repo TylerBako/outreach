@@ -19,10 +19,12 @@ function PostInput({fetchPosts}) {
     }
 
     return (
-        <div>
-            <textarea className="bg-black text-white py-2 rounded px-4"
+        <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg">
+            <textarea 
+            className="bg-black text-white py-2 rounded-lg p-4 w-full h-24"
              value={message}
-              onChange={((e) => setMessage(e.target.value))}>
+              onChange={((e) => setMessage(e.target.value))}
+              placeholder="Write your post here">
               </textarea>
 
             <button type="submit"

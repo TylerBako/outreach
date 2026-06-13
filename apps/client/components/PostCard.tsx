@@ -27,19 +27,8 @@ function PostCard({post, fetchPosts}) {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     return (
-        <div>
+        <div className="rounded-x1 bg-white shadow-md p-4 mb-4">
             <p>{post.content}</p>
             <p>{post.authorId}</p>
             <p>{post.createdAt}</p>
@@ -48,9 +37,9 @@ function PostCard({post, fetchPosts}) {
                     <div key={comment.id} comment={comment}>{comment.content}</div>
                 ))}
             </div>
-            <button onClick={handleDelete}>Delete</button>
+            <button onClick={handleDelete} className="rounded-full bg-orange-500">Delete</button>
             <textarea value={comment} onChange={((e) => setComment(e.target.value))} ></textarea>
-            <button onClick={handleCommentSubmit}>post</button>
+            <button onClick={handleCommentSubmit} className="rounded-full  bg-orange-500">comment</button>
         </div>
     )
 }

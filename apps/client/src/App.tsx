@@ -1,6 +1,7 @@
 import PostInput from "../components/PostInput"
 import Feed from "../components/Feed"
 import { useState, useEffect } from 'react'
+import NavBar from "../components/NavBar"
 
 
 
@@ -22,8 +23,8 @@ function App(){
 
 
   return (
-    <div>
-      <h1>Outreach</h1>
+    <div className="min-h-screen flex flex-col">
+      <NavBar />
       <Feed posts={posts} fetchPosts={fetchPosts} />
       <PostInput fetchPosts={fetchPosts} />
       
