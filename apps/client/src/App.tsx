@@ -24,7 +24,7 @@ function App(){
   return (
     <div>
       <h1>Outreach</h1>
-      <Feed posts={posts} />
+      <Feed posts={posts} fetchPosts={fetchPosts} />
       <PostInput fetchPosts={fetchPosts} />
       
     </div>

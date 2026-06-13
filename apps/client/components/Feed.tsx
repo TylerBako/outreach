@@ -1,10 +1,12 @@
+import PostCard from '../components/PostCard'
 
-function Feed({posts}) {
+
+function Feed({posts, fetchPosts}) {
 
     return (
         <div>
             {posts.map(post => (
-                <div key={post.id}>{post.content}</div>
+                <PostCard key={post.id} post={post} fetchPosts={fetchPosts} />
             ))}
         </div>
     )

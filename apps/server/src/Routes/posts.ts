@@ -4,8 +4,8 @@ import { createPost, getAllPosts, getPostById, deletePost, createComment, delete
 const router = express.Router();
 
 router.post('/posts', createPost)
-router.get('/posts/:id', getPostById)
 router.get("/posts", getAllPosts)
+router.get('/posts/:id', getPostById)
 
 router.post('/posts/:postId/comments', createComment)
 router.delete("/posts/:id", deletePost)
