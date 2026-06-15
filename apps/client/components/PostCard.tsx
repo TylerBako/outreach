@@ -1,5 +1,7 @@
 import { useState } from "react"
-
+import { formatDistanceToNow } from "date-fns"
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog"
+import { ScrollArea } from "./ui/scroll-area"
 
 
 function PostCard({post, fetchPosts}) {
@@ -12,6 +14,7 @@ function PostCard({post, fetchPosts}) {
 
 
     const [comment, setComment] = useState("")
+    const [expand, setExpand] = useState(false)
 
 
     const handleCommentSubmit = async () => {
@@ -28,18 +31,56 @@ function PostCard({post, fetchPosts}) {
 
 
     return (
-        <div className="rounded-x1 bg-white shadow-md p-4 mb-4">
-            <p>{post.content}</p>
-            <p>{post.authorId}</p>
-            <p>{post.createdAt}</p>
-            <div>
-                {post.comments.map(comment => (
-                    <div key={comment.id} comment={comment}>{comment.content}</div>
+        <div className="rounded-xl bg-white shadow-md p-4 mb-4 relative min-w-90">
+            <p className={`${expand ? "" : "line-clamp-3"} font-medium text-lg pt-4 break-words`}>
+                {post.content}
+            </p>
+
+            <p className="text-sm text-gray-500">{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))}</p>
+            
+
+            {/* Seperator between comment and post*/}
+            <div className="border-t mt-3 pt-3 border-orange-400">
+                {post.comments.slice(0, 2).map(comment => (
+                    <div key={comment.id} className="textsm text-gray-600 mb-1">
+                        <span className="font-medium">{comment.author.username}: </span> {comment.content}
+                    </div>
                 ))}
             </div>
-            <button onClick={handleDelete} className="rounded-full bg-orange-500">Delete</button>
-            <textarea value={comment} onChange={((e) => setComment(e.target.value))} ></textarea>
-            <button onClick={handleCommentSubmit} className="rounded-full  bg-orange-500">comment</button>
+
+            <Dialog>
+                <DialogTrigger className="text-sm text-orange-400">See more</DialogTrigger>
+                <DialogContent className="!bg-white shadow-md" style={{maxWidth: '600px', width: '100%'}}>
+                    <ScrollArea className="h-96">
+                    <p className="font-medium text-lg">{post.content}</p>
+                    <p className="text-sm text-grey-500">{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))} </p>
+                    <div className="border-t mt-3 pt-3 border-orange-400">
+                        {post.comments.map(comment => (
+                        <div key={comment.id} comment={comment} className="pt-3">{comment.content}
+                        <p className="text-sm text-gray-500">{comment.author.username} · {formatDistanceToNow(new Date(comment.createdAt))}</p>
+                        </div>
+                    ))}
+                    </div>
+                    </ScrollArea>
+                </DialogContent>
+            </Dialog>
+
+            <button onClick={handleDelete} 
+            className="rounded-full absolute top-2 right-2 text-sm px-2 text-white bn-2" 
+            style={{backgroundColor: '#f29057'}}>
+                X
+            </button>
+
+
+            <div className="flex flex-col gap-2 mt-2">
+                <textarea value={comment} onChange={((e) => setComment(e.target.value))}
+                 className="flex-1 border border-gray-300 rounded p-2 text-sm resize-none" 
+                 placeholder="write a comment here">
+                </textarea>
+                <button onClick={handleCommentSubmit}
+                 className="rounded-full text-white pl-1 pr-1 px-3 py-1 rounded text-sm self-center" 
+                 style={{backgroundColor: '#f29057'}}>comment</button>
+            </div>
         </div>
     )
 }

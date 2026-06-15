@@ -53,7 +53,12 @@ const getAllPosts = async (req: Request, res: Response) => {
             createdAt: "desc"
         },
         include: {
-            comments: true
+            comments: {
+                include: {
+                    author: true
+                }
+            },
+            author: true
         }
     })
     res.status(200).json(post)
