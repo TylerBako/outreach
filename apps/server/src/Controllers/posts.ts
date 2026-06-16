@@ -1,19 +1,38 @@
 import prisma from "../db"
 import { Request, Response } from 'express'
+import Anthropic from '@anthropic-ai/sdk'
 
 
+
+const client = new Anthropic({
+    apiKey: process.env['ANTHROPIC_API_KEY'],
+})
 
 
 const createPost = async (req: Request, res: Response) => {
     const { content, authorId } = req.body
+    const message = await client.messages.create({
+        model: 'claude-opus-4-6',
+        max_tokens: 10,
+        messages: [{ role: 'user', content: `You are moderating the content. Check if this message contains any harmful content such as self-harm, suicide, or any crisis langaage. Respond with only "SAFE" or "HARMFUL". Message: ${content}`}]
+    })
+        const claudeResponse = message.content[0].type === 'text' ? message.content[0].text : ''
+
+    if(claudeResponse === "HARMFUL") {
+
+        res.status(400).json({error: "This post has been blocked due to harmful content"})
+        return
+    }
  const post = await prisma.post.create({
     data: {
         content: content,
         authorId: authorId
-    }
+    },
+
 })
 res.status(201).json(post)
 }
+
 
 const getPostById = async (req: Request, res: Response) => {
     const idParam = req.params.id
@@ -36,6 +55,18 @@ const createComment = async (req: Request, res: Response) => {
     const { content, authorId } = req.body
     const postIdParam = req.params.postId
     const postId = Number(postIdParam)
+    const message = await client.messages.create({
+        model: 'claude-opus-4-6',
+        max_tokens: 10,
+        messages: [{role: 'user', content: `You are moderating the content. Check if this message contains any harmful content such as self-harm, suicide, or any crisis langaage. Respond with only "SAFE" or "HARMFUL". Message: ${content}`}]
+    })
+
+    const claudeResponse = message.content[0].type === 'text' ? message.content[0].text : ''
+    if(claudeResponse === 'HARMFUL') {
+        res.status(400).json({error: 'This comment has been blocked due to harmful content'})
+        return
+    }
+    
     const comment = await prisma.comment.create({
         data: {
             content: content,

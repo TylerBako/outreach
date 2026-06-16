@@ -4,18 +4,24 @@ import { useState } from 'react'
 
 function PostInput({fetchPosts}) {
     const [message, setMessage] = useState("")
-
+    const [error, setError] = useState("")
 
 
     const handleSubmit = async () => {
-        await fetch("http://localhost:3000/posts", {
+       const response = await fetch("http://localhost:3000/posts", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({content: message, authorId: 1})
         })
+        if (!response.ok) {
+            const data = await response.json()
+            setError(data.error)
+            return
+        }
         fetchPosts()
+        setError("")
     }
 
     return (
@@ -27,7 +33,7 @@ function PostInput({fetchPosts}) {
               placeholder="Write your post here"
               style={{backgroundColor: '#f29057'}}>
               </textarea>
-
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
             <button type="submit"
              className="text-white px-4 py-2 rounded" 
              onClick={handleSubmit}
