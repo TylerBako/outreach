@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { LoaderCircle } from 'lucide-react'
+import { Button } from './ui/button.tsx'
 
 
 function PostInput({fetchPosts}) {
@@ -48,12 +49,12 @@ function PostInput({fetchPosts}) {
               style={{backgroundColor: '#f29057'}}>
               </textarea>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-            <button type="submit"
-             className="text-white px-4 py-2 rounded fle items-center justify-center" 
+            <Button type="submit"
+             className="text-white rounded fle items-center justify-center" 
              onClick={handleSubmit}
              style={{backgroundColor: '#f29057'}}>
-                {isLoading ? <LoaderCircle className="size-5 animate-spin" /> : "Post" }
-                </button>
+                {isLoading ? <LoaderCircle className="size-5 animate-spin" /> : "Submit Post" }
+            </Button>
         </div>
     )
 }

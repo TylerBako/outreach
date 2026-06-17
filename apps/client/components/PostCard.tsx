@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog"
 import { ScrollArea } from "./ui/scroll-area"
 import { LoaderCircle } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar.tsx'
+import { Button } from './ui/button.tsx'
 
 
 function PostCard({post, fetchPosts}) {
@@ -99,10 +100,8 @@ function PostCard({post, fetchPosts}) {
                     <p className="text-sm text-gry-500">{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))} </p>
                     </div>
 
-
-
                     <div className="border-t mt-3 pt-3 border-orange-400">
-                            <div>
+                    <div>
                         {post.comments.map(comment => (
                             <div key={comment.id} comment={comment} className="pt-3 flex items-center gap-2">
                                 <Avatar>
@@ -120,8 +119,6 @@ function PostCard({post, fetchPosts}) {
                     </div>
                     </div>
 
-
-
                      <div className="flex flex-col gap-2 mt-2">
                         <textarea value={comment} onChange={((e) => setComment(e.target.value))}
                         className="flex-1 border border-gray-300 rounded p-2 text-sm resize-none" 
@@ -129,9 +126,9 @@ function PostCard({post, fetchPosts}) {
                         style={{backgroundColor: '#65574e'}}>
                         </textarea>
                         {error && <p className="text-red-500 text-sm">{error}</p>}
-                        <button onClick={handleCommentSubmit}
-                        className="rounded-full text-white pl-1 pr-1 px-3 py-1 rounded text-sm self-center" 
-                        style={{backgroundColor: '#f29057'}}>comment</button>
+                        <Button onClick={handleCommentSubmit}
+                        className="rounded-full text-white rounded self-center" 
+                        style={{backgroundColor: '#f29057'}}>Comment</Button>
                         </div>
                     </ScrollArea>
                 </DialogContent>
@@ -150,12 +147,14 @@ function PostCard({post, fetchPosts}) {
                  placeholder="write a comment here"
                  style={{backgroundColor: '#65574e'}}>
                 </textarea>
+
                 {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-                <button onClick={handleCommentSubmit}
-                 className="rounded-full text-white pl-1 pr-1 px-3 py-1 rounded text-sm self-center flex items-center justify-center" 
+
+                <Button onClick={handleCommentSubmit}
+                 className="rounded-full text-white rounded self-center flex items-center justify-center" 
                  style={{backgroundColor: '#f29057'}}>
                 {isLoading ? <LoaderCircle className="size-5 animate-spin" /> : "Comment" }
-                </button>
+                </Button>
             </div>
         </div>
     )

@@ -20,7 +20,7 @@ const createPost = async (req: Request, res: Response) => {
 
     if(claudeResponse === "HARMFUL") {
 
-        res.status(400).json({error: "This post has been blocked due to harmful content"})
+        res.status(400).json({error: "We understand you may be going through a difficult time but we have had to block this message due to theme's occuring within. If you're struggling, please reach out to a mental health professional"})
         return
     }
  const post = await prisma.post.create({
@@ -63,7 +63,7 @@ const createComment = async (req: Request, res: Response) => {
 
     const claudeResponse = message.content[0].type === 'text' ? message.content[0].text : ''
     if(claudeResponse === 'HARMFUL') {
-        res.status(400).json({error: 'This comment has been blocked due to harmful content'})
+        res.status(400).json({error: "We understand you may be going through a difficult time but we have had to block this message due to theme's occuring within. If you're struggling, please reach out to a mental health professional"})
         return
     }
     
