@@ -64,22 +64,23 @@ function PostCard({post, fetchPosts}) {
                     className="border color" />
                     <AvatarFallback className="rounded-full bg-orange-500 w-8 h-8 flex items-center justify-center text-white font-bold text-sm">{post.author.username[0].toUpperCase()}</AvatarFallback>
                 </Avatar>
-                <span className="text-sm text-gray-500">{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))}</span>
+                <span className="text-sm"style={{color: '#f29057'}}>{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))}</span>
             </div>
             
 
             {/* Seperator between comment and post*/}
             <div className="border-t mt-3 pt-3 border-orange-400">
                 {post.comments.slice(0, 2).map(comment => (
-                    <div key={comment.id} className="text-sm text-gray-600 mb-1 line-clamp-2 flex items-center gap-2 justify-start">
+                    <div key={comment.id} className="text-sm text-gray-300 mb-1 line-clamp-2 flex items-center gap-2 justify-start">
                            <Avatar>
                     <AvatarImage src={`https://api.dicebear.com/10.x/micah/svg?seed=${comment.author.username}`}
                     alt="@shadcn"
                     />
                     <AvatarFallback className="rounded-fill bg-orange-500 w8 h-8 flex items-center justify-center text-white font-bold text-sm">{comment.author.username[0].toUpperCase()}</AvatarFallback>
                 </Avatar>
+                    <div className="text-left">
                         <span className="font-medium" style={{color: '#f29057'}}>
-                            {comment.author.username}: </span> {comment.content}
+                         {comment.author.username}: </span> {comment.content} </div>
                     </div>
                 ))}
             </div>
@@ -89,14 +90,38 @@ function PostCard({post, fetchPosts}) {
                 <DialogContent className="text-white border-2" style={{borderColor: '#f29057',maxWidth: '600px', width: '100%', backgroundColor: '#302a26'}}>
                     <ScrollArea className="h-[80ch]">
                     <p className="font-medium text-lg">{post.content}</p>
-                    <p className="text-sm text-grey-500">{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))} </p>
+                    <div className="flex items-center gap-2">
+                    <Avatar>
+                        <AvatarImage src={`https://api.dicebear.com/10.x/micah/svg?seed=${post.author.username}`}
+                        alt="@shadcn" />
+                        <AvatarFallback className="rounded-full bg-orange-500 w-8 h-8 flex items-center justify-center text-white font-bold text-sm">{post.author.username[0].toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                    <p className="text-sm text-gry-500">{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))} </p>
+                    </div>
+
+
+
                     <div className="border-t mt-3 pt-3 border-orange-400">
+                            <div>
                         {post.comments.map(comment => (
-                        <div key={comment.id} comment={comment} className="pt-3">{comment.content}
-                        <p className="text-sm" style={{color: '#f29057'}}>{comment.author.username} · {formatDistanceToNow(new Date(comment.createdAt))}</p>
+                            <div key={comment.id} comment={comment} className="pt-3 flex items-center gap-2">
+                                <Avatar>
+                                    <AvatarImage src={`https://api.dicebear.com/10.x/micah/svg?seed=${comment.author.username}`}
+                                    alt="@shadcn" />
+                                    <AvatarFallback className="rounded-full bg-orange-500 w-8 h-8 flex items-center justify-center text-white font-bold text-sm">{comment.author.username[0].toUpperCase()}</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                {comment.content}
+                                <p className="text-sm" style={{color: '#f29057'}}>
+                                    {comment.author.username} · {formatDistanceToNow(new Date(comment.createdAt))}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                    ))}
                     </div>
+
+
+
                      <div className="flex flex-col gap-2 mt-2">
                         <textarea value={comment} onChange={((e) => setComment(e.target.value))}
                         className="flex-1 border border-gray-300 rounded p-2 text-sm resize-none" 
