@@ -3,6 +3,12 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
+@theme {
+  --color-surface: #ffffff;
+  --color-background: #f6efe4;
+  --color-primary: #f29057;
+}
+
 
 
 #root {
@@ -18,7 +24,7 @@
 
 body {
   margin: 0;
-  background-color: #1c1917;
+  background-color: var(--color-background);
 }
 
 h1,
@@ -37,6 +43,7 @@ h1 {
     margin: 20px 0;
   }
 }
+
 h2 {
   font-size: 24px;
   line-height: 118%;
@@ -46,6 +53,8 @@ h2 {
     font-size: 20px;
   }
 }
+
 p {
   margin: 0;
 }
+

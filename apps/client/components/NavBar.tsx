@@ -7,7 +7,6 @@ function NavBar() {
             <ul className="flex p-4">    
                 <li className="px-3 text-white"><Link to="/previous-posts">Previous Posts</Link></li>
                 <li className="px-3 text-white"><Link to="/">Feed</Link></li>
-                <li className="px-3 text-white"><a href="#">Contact Us</a></li>
             </ul>    
         </div>
     )
