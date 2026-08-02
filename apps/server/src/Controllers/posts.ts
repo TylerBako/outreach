@@ -12,7 +12,7 @@ const client = new Anthropic({
 const createPost = async (req: Request, res: Response) => {
     const { content, authorId } = req.body
     const message = await client.messages.create({
-        model: 'claude-opus-4-6',
+        model: 'claude-sonnet-5',
         max_tokens: 10,
         messages: [{ role: 'user', content: `You are moderating the content. Check if this message contains any harmful content such as self-harm, suicide, or any crisis langaage. Respond with only "SAFE" or "HARMFUL". Message: ${content}`}]
     })
@@ -56,7 +56,7 @@ const createComment = async (req: Request, res: Response) => {
     const postIdParam = req.params.postId
     const postId = Number(postIdParam)
     const message = await client.messages.create({
-        model: 'claude-opus-4-6',
+        model: 'claude-sonnet-5',
         max_tokens: 10,
         messages: [{role: 'user', content: `You are moderating the content. Check if this message contains any harmful content such as self-harm, suicide, or any crisis langaage. Respond with only "SAFE" or "HARMFUL". Message: ${content}`}]
     })

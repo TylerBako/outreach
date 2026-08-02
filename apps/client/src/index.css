@@ -1,14 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
+
 @theme {
   --color-surface: #ffffff;
   --color-background: #f6efe4;
   --color-primary: #f29057;
+  --font-body: 'Nunito', sans-serif;
 }
-
 
 
 #root {
@@ -25,12 +27,13 @@
 body {
   margin: 0;
   background-color: var(--color-background);
+  font-family: var(--font-body);
 }
 
 h1,
 h2 {
-  font-family: var(--heading);
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-weight: 800;
   color: var(--text-h);
 }
 
