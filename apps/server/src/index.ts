@@ -21,6 +21,20 @@ app.get('/', (_: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
 
-app.listen(Number(PORT), '0.0.0.0', () => {
+/*app.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`🚀 Server is running on http://localhost:${PORT}`)
+})*/
+
+const server = app.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`)
 })
+
+server.on("close", () => {
+  console.log("SERVER CLOSED")
+})
+
+server.on("error", (err) => {
+  console.log("SERVER ERROR", err)
+})
+
+console.log("End of index.ts reached")
