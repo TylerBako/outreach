@@ -92,6 +92,9 @@ const getAllPosts = async (req: Request, res: Response) => {
             author: true
         }
     })
+
+    console.log("DATABASE RETURNED")
+    
     res.status(200).json(post)
 }
 
