@@ -24,7 +24,20 @@ function NavBar() {
                 {location.pathname ==='/' &&  <div style={{position: 'absolute', left: 0, right: 0, bottom: '15px', height: '3px', borderRadius: '3px', background: '#f29057'}}></div>
                 }</li>
 
-                <li className="px-3 flex gap-[30px]" style = {{position: 'relative', cursor: 'pointer', padding: '15px 0'}}><Link to ="/" style ={{color: '#8a8178'}}>Community</Link>
+                
+                
+            </ul>    
+        </div>
+    )
+}
+
+export default NavBar
+
+
+/* 
+These will be used when I make the pages for them, just need to move them into the unorderd list
+
+<li className="px-3 flex gap-[30px]" style = {{position: 'relative', cursor: 'pointer', padding: '15px 0'}}><Link to ="/" style ={{color: '#8a8178'}}>Community</Link>
                 {location.pathname === '/community' && <div style={{position: 'absolute', left: 0, right: 0, bottom: '15px', height: '3px', borderRadius: '3px', background: '#f29057'}}></div>}</li>
 
 
@@ -34,10 +47,4 @@ function NavBar() {
 
                 <li className="px-3 flex gap-[30px]" style ={{position: 'relative', cursor: 'pointer', padding: '15px 0'}}><Link to ="/" style={{color: '#8a8178'}}>Resources</Link>
                 {location.pathname === '/resources' && <div style={{position: 'absolute', left: 0, right: 0, bottom: '15px', height: '3px', borderRadius: '3px', background: '#f29057'}}></div>}</li>
-                
-            </ul>    
-        </div>
-    )
-}
-
-export default NavBar
+                */
