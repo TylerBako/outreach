@@ -53,26 +53,31 @@ function PostCard({post, fetchPosts}) {
 
 
     return (
-        <div className="rounded-xl shadow-lg p-4 mb-4 relative text-white min-w-90 border" style={{backgroundColor:'#302a26', borderColor: '#f29057', boxShadow: '10px 5px 1px #f29057'}}>
-            <p className={`${expand ? "" : "line-clamp-3"} font-medium text-lg pt-4 break-words`}>
-                {post.content}
-            </p>
-
-            <div className="flex items-center gap-2 mt-1">
+        <div className="rounded-xl shadow-xl p-4 mb-4 relative min-w-90 border-l-6 border-orange-400" style={{backgroundColor:'#ffffff', color: '#3a342e'}}>
+             <div className="flex items-center gap-2 mt-1">
                 <Avatar>
                     <AvatarImage src={`https://api.dicebear.com/10.x/micah/svg?seed=${post.author.username}`}
                     alt="@shadcn"
                     className="border color" />
-                    <AvatarFallback className="rounded-full bg-orange-500 w-8 h-8 flex items-center justify-center text-white font-bold text-sm">{post.author.username[0].toUpperCase()}</AvatarFallback>
+                    <AvatarFallback className="rounded-full bg-orange-500 w-10 h-10 flex items-center justify-center text-white font-bold text-sm">{post.author.username[0].toUpperCase()}</AvatarFallback>
                 </Avatar>
-                <span className="text-sm"style={{color: '#f29057'}}>{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))}</span>
+                <div className="flex flex-col">
+                <span className="text-xl font-bold" style={{color: '##2b2622'}}>{post.author.username}</span>
+                <span> {formatDistanceToNow(new Date(post.createdAt))}</span>
+                </div>
             </div>
+            
+            <p className={`${expand ? "" : "line-clamp-3"} font-medium text-lg pt-4 break-words text-left`}>
+                {post.content}
+            </p>
+
+           
             
 
             {/* Seperator between comment and post*/}
-            <div className="border-t mt-3 pt-3 border-orange-400">
+            <div className="border-t mt-2 pt-2" style={{borderColor: '#e8dcc9'}}>
                 {post.comments.slice(0, 2).map(comment => (
-                    <div key={comment.id} className="text-sm text-gray-300 mb-1 line-clamp-2 flex items-center gap-2 justify-start">
+                    <div key={comment.id} className="text-sm mb-1 line-clamp-2 flex items-center gap-2 justify-start" style={{color: '#3a342e'}}>
                            <Avatar>
                     <AvatarImage src={`https://api.dicebear.com/10.x/micah/svg?seed=${comment.author.username}`}
                     alt="@shadcn"
@@ -87,8 +92,8 @@ function PostCard({post, fetchPosts}) {
             </div>
 
             <Dialog>
-                <DialogTrigger className="text-sm text-orange-400">See more</DialogTrigger>
-                <DialogContent className="text-white border-2" style={{borderColor: '#f29057',maxWidth: '600px', width: '100%', backgroundColor: '#302a26'}}>
+                <DialogTrigger className="text-sm text-orange-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">See more</DialogTrigger>
+                <DialogContent className="border-t-6" style={{borderColor: '#f29057',maxWidth: '600px', width: '100%', backgroundColor: '#ffffff', color: '#3a342e'}}>
                     <ScrollArea className="h-[80ch]">
                     <p className="font-medium text-lg">{post.content}</p>
                     <div className="flex items-center gap-2">
@@ -97,7 +102,7 @@ function PostCard({post, fetchPosts}) {
                         alt="@shadcn" />
                         <AvatarFallback className="rounded-full bg-orange-500 w-8 h-8 flex items-center justify-center text-white font-bold text-sm">{post.author.username[0].toUpperCase()}</AvatarFallback>
                     </Avatar>
-                    <p className="text-sm text-gry-500">{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))} </p>
+                    <p className="text-sm text-[#2b2622]">{post.author.username} · {formatDistanceToNow(new Date(post.createdAt))} </p>
                     </div>
 
                     <div className="border-t mt-3 pt-3 border-orange-400">
@@ -123,7 +128,7 @@ function PostCard({post, fetchPosts}) {
                         <textarea value={comment} onChange={((e) => setComment(e.target.value))}
                         className="flex-1 border border-gray-300 rounded p-2 text-sm resize-none" 
                         placeholder="write a comment here"
-                        style={{backgroundColor: '#65574e'}}>
+                        style={{backgroundColor: '#f6efe4'}}>
                         </textarea>
                         {error && <p className="text-red-500 text-sm">{error}</p>}
                         <Button onClick={handleCommentSubmit}
@@ -135,7 +140,7 @@ function PostCard({post, fetchPosts}) {
             </Dialog>
 
             <button onClick={handleDelete} 
-            className="rounded-full absolute top-2 right-2 text-sm px-2 text-white bn-2" 
+            className="rounded-full absolute top-2 right-2 text-sm px-2 text-white bn-2 hover-orange-900" 
             style={{backgroundColor: '#f29057'}}>
                 X
             </button>
@@ -145,7 +150,7 @@ function PostCard({post, fetchPosts}) {
                 <textarea value={comment} onChange={((e) => setComment(e.target.value))}
                  className="flex-1 border rounded p-2 text-sm resize-none" 
                  placeholder="write a comment here"
-                 style={{backgroundColor: '#65574e'}}>
+                 style={{backgroundColor: '#f6efe4', borderColor: '#efe6da'}}>
                 </textarea>
 
                 {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
