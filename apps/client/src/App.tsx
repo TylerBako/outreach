@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import NavBar from "../components/NavBar"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PreviousPosts from "../components/PreviousPosts"
-import CommunityFeed from '../components/Communities'
 
 
 
@@ -32,7 +31,6 @@ function App(){
       <Routes>
       <Route path="/" element={<Feed posts={posts} fetchPosts={fetchPosts} />} />
       <Route path="/previous-posts" element={<PreviousPosts posts={posts} fetchPosts={fetchPosts} />} />
-      <Route path='/community' element={<CommunityFeed posts={posts} fetchPosts={fetchPosts} />} />
       </Routes>
       <PostInput fetchPosts={fetchPosts}/>
       </BrowserRouter>

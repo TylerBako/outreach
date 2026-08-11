@@ -5,9 +5,14 @@ import { ScrollArea } from "./ui/scroll-area"
 import { LoaderCircle } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar.tsx'
 import { Button } from './ui/button.tsx'
+import type { Post } from '../src/types'
 
+type PostCardProps = {
+    post: Post
+    fetchPosts: () => Promise<void>
+}
 
-function PostCard({post, fetchPosts}) {
+function PostCard({post, fetchPosts}: PostCardProps) {
     const handleDelete = async () => {
         await fetch(`http://localhost:3000/posts/${post.id}`, {
             method: 'DELETE'
@@ -17,7 +22,7 @@ function PostCard({post, fetchPosts}) {
 
 
     const [comment, setComment] = useState("")
-    const [expand, setExpand] = useState(false)
+    const [expand] = useState(false)
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
@@ -108,7 +113,7 @@ function PostCard({post, fetchPosts}) {
                     <div className="border-t mt-3 pt-3 border-orange-400">
                     <div>
                         {post.comments.map(comment => (
-                            <div key={comment.id} comment={comment} className="pt-3 flex items-center gap-2">
+                            <div key={comment.id} className="pt-3 flex items-center gap-2">
                                 <Avatar>
                                     <AvatarImage src={`https://api.dicebear.com/10.x/micah/svg?seed=${comment.author.username}`}
                                     alt="@shadcn" />
