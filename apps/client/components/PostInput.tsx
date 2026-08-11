@@ -2,8 +2,12 @@ import { useState } from 'react'
 import { LoaderCircle } from 'lucide-react'
 import { Button } from './ui/button.tsx'
 
+type PostInputProps = {
+    fetchPosts: () => Promise<void>
+}
 
-function PostInput({fetchPosts}) {
+
+function PostInput({fetchPosts}: PostInputProps) {
     const [message, setMessage] = useState("")
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] =  useState(false)

@@ -1,7 +1,13 @@
 import PostCard from '../components/PostCard'
 import { useMemo } from "react"
+import type { Post } from '../src/types'
 
-function PreviousPosts({posts, fetchPosts}) {
+type PreviousPostProps = {
+    posts: Post[]
+    fetchPosts: () => Promise<void>
+}
+
+function PreviousPosts({posts, fetchPosts}: PreviousPostProps) {
 
      const userPosts = useMemo(() => {
         return posts.filter(post => post.authorId === 1)
