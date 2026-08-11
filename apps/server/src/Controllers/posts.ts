@@ -78,7 +78,7 @@ const createComment = async (req: Request, res: Response) => {
 }
 
 
-const getAllPosts = async (req: Request, res: Response) => {
+const getAllPosts = async (_req: Request, res: Response) => {
     const post = await prisma.post.findMany({
         orderBy: {
             createdAt: "desc"
@@ -102,7 +102,7 @@ const deletePost = async (req: Request, res: Response) => {
     const idParam = req.params.id
     const id = Number(idParam)
     try {
-    const post = await prisma.post.delete({
+    await prisma.post.delete({
         where: { id },
     })
     res.status(200).json({ message: "Post has successfully been deleted"})
@@ -115,7 +115,7 @@ const deleteComment = async (req: Request, res: Response)=> {
     const commentIdParam = req.params.commentId
     const commentId = Number(commentIdParam)
     try {
-    const comment = await prisma.comment.delete({
+    await prisma.comment.delete({
         where: { id: commentId }
     })
     res.status(200).json({ message: "Comment has been deleted"})
