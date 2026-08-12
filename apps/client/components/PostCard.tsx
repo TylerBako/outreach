@@ -7,6 +7,9 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar.tsx'
 import { Button } from './ui/button.tsx'
 import type { Post } from '../src/types'
 
+
+const API_URL = import.meta.env.VITE_API_URL
+
 type PostCardProps = {
     post: Post
     fetchPosts: () => Promise<void>
@@ -14,7 +17,7 @@ type PostCardProps = {
 
 function PostCard({post, fetchPosts}: PostCardProps) {
     const handleDelete = async () => {
-        await fetch(`http://localhost:3000/posts/${post.id}`, {
+        await fetch(`${API_URL}/posts/${post.id}`, {
             method: 'DELETE'
         })
         fetchPosts()
@@ -30,7 +33,7 @@ function PostCard({post, fetchPosts}: PostCardProps) {
     const handleCommentSubmit = async () => {
         setIsLoading(true)
         try {
-        const response = await fetch(`http://localhost:3000/posts/${post.id}/comments`, {
+        const response = await fetch(`${API_URL}/posts/${post.id}/comments`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

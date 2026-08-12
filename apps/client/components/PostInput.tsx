@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { LoaderCircle } from 'lucide-react'
 import { Button } from './ui/button.tsx'
 
+
+const API_URL = import.meta.env.VITE_API_URL
+
 type PostInputProps = {
     fetchPosts: () => Promise<void>
 }
@@ -16,7 +19,7 @@ function PostInput({fetchPosts}: PostInputProps) {
     const handleSubmit = async () => {
         setIsLoading(true)
         try {
-       const response = await fetch("http://localhost:3000/posts", {
+       const response = await fetch(`${API_URL}/posts`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
