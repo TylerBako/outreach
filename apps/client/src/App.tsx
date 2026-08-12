@@ -6,13 +6,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PreviousPosts from "../components/PreviousPosts"
 
 
-
+const API_URL = import.meta.env.VITE_API_URL
 
 function App(){
   const [ posts, setPosts ] = useState([])
 
         const fetchPosts = async () => {
-           const response = await fetch("http://localhost:3000/posts")
+           const response = await fetch(`${API_URL}/posts`)
            const data = await response.json()
            setPosts(data)
     }
