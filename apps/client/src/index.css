@@ -28,6 +28,7 @@ body {
   margin: 0;
   background-color: var(--color-background);
   font-family: var(--font-body);
+  color: #302a26;
 }
 
 h1,
