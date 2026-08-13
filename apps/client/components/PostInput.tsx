@@ -28,12 +28,20 @@ function PostInput({fetchPosts}: PostInputProps) {
         })
 
         if (!response.ok) {
-            const data = await response.json()
-            setError(data.error)
+            const text = await response.text()
+
+            try {
+                const data = JSON.parse(text)
+                setError(data.error ?? `Request failed (${response.status})`)
+            } catch {
+                setError(text || `Request failed (${response.status})`)
+            }
+
             return
         }
+
         setMessage("")
-        fetchPosts()
+        await fetchPosts()
         setError("")
     } catch (err: unknown) {
         if(err instanceof Error) {
@@ -55,7 +63,7 @@ function PostInput({fetchPosts}: PostInputProps) {
             <input placeholder="Share something with the community..." className="flex-1 border-none outline-none bg-transparent text-[18px] py-2" value={message}
               onChange={((e) => setMessage(e.target.value))} />
               {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-            <Button type='submit' className='flex-none rounded-[13px] bg-[#f29057] text-white font-bold text-[14.5px] px-[22px] py-[11px] hover:bg-[#e87d40]
+            <Button type='button' className='flex-none rounded-[13px] bg-[#f29057] text-white font-bold text-[14.5px] px-[22px] py-[11px] hover:bg-[#e87d40]
             ' onClick={handleSubmit}>
                 {isLoading ? <LoaderCircle className="size-5 animate-spin" /> : "Post" }</Button>
         </div>
