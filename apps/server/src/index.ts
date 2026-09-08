@@ -36,5 +36,6 @@ server.on("close", () => {
 server.on("error", (err) => {
   console.log("SERVER ERROR", err)
 })
-
+/*
 console.log("End of index.ts reached")
+*/
