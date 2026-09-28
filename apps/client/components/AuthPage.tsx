@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { AuthView } from '@neondatabase/neon-js/auth/react/ui'
 
 type AuthPageProps = {
