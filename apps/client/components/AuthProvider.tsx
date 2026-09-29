@@ -8,7 +8,9 @@ type AuthProviderProps = {
 
 export default function AuthProvider({ children }: AuthProviderProps) {
     return (
-        <NeonAuthUIProvider authClient={neonAuth}>
+        <NeonAuthUIProvider authClient={neonAuth}
+        redirectTo="/feed"
+        >
             {children}
         </NeonAuthUIProvider>
     )
