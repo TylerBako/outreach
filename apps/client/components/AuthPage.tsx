@@ -1,4 +1,5 @@
 import { AuthView } from '@neondatabase/neon-js/auth/react/ui'
+import CustomSignUpForm from './CustomSignUpForm'
 
 type AuthPageProps = {
     pathname: 'sign-in' | 'sign-up'
@@ -19,7 +20,10 @@ export default function AuthPage({ pathname }: AuthPageProps) {
 
             <section className="flex items-center justify-center px-6 py-12 md:col-span-7">
                 <div className="home-auth-card w-full max-w-xl rounded-3xl border border-[#efe6da] bg-white p-8">
-                    <AuthView pathname={pathname} /> 
+                    {pathname === 'sign-up' ? (
+                        <CustomSignUpForm />
+                    ) : (
+                        <AuthView pathname="sign-in" />)}
                 </div>
             </section>
         </main>
