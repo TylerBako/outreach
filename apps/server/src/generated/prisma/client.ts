@@ -56,3 +56,8 @@ export type Post = Prisma.PostModel
  * 
  */
 export type Comment = Prisma.CommentModel
+/**
+ * Model Profile
+ * 
+ */
+export type Profile = Prisma.ProfileModel

@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from "dotenv"
 import router from './Routes/posts.js';
 import cors from 'cors'
+import profileRouter from "./Routes/profile.js"
 
 dotenv.config()
 
@@ -14,6 +15,7 @@ console.log("this is being registered")
 
 app.use(cors())
 app.use(express.json())
+app.use("/profile", profileRouter)
 app.use('/', router)
 
 app.get('/', (_: Request, res: Response) => {
