@@ -6,6 +6,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import PreviousPosts from "../components/PreviousPosts"
 import AuthPage from '../components/AuthPage'
 import HomePage from '../components/HomePage'
+import ProfileCreationPage from "../components/ProfileCreationPage"
 
 
 const API_URL = import.meta.env.VITE_API_URL
@@ -38,6 +39,8 @@ function App(){
       <Route path="/auth/sign-in" element={<AuthPage pathname="sign-in" />} />
       <Route path="/auth/sign-up" element={<AuthPage pathname="sign-up" />} />
       <Route path="/" element={<HomePage />} />
+      <Route path="/profile/create"
+      element={<ProfileCreationPage />}/>
       </Routes>
       {isAppPage && <PostInput fetchPosts={fetchPosts}/>}
     </div>
