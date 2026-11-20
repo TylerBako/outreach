@@ -1,9 +1,42 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 import { useState } from "react"
+import { authenticatedFetch } from "../lib/api"
 
 export default function ProfileCreationPage() {
     const [bio, setBio] = useState("")
     const [selectedCommunities, setSelectedCommunities] = useState<string[]>([])
+    const [username, setUsername] = useState("")
+    const [avatarKey, setAvatarKey] = useState("")
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    
+    const profileData = {
+        username,
+        bio,
+        avatarKey,
+        communityKeys: selectedCommunities,
+    }
+
+    try {
+        const response = await authenticatedFetch("/profile", {
+            method: "POST",
+            body: JSON.stringify(profileData),
+        })
+
+        const data = await response.json()
+
+        if(!response.ok) {
+            throw new Error(data.error || "Failed to create profile")
+        }
+
+        console.log("Profile created:", data)
+    } catch (error) {
+        console.error("Profile creation failed", error)
+    }
+
+    }
+
 
     const communities = [
         { key: "depression", label: "Depression"},
@@ -43,7 +76,7 @@ export default function ProfileCreationPage() {
             <h2>Create your profile</h2>
 
             <TooltipProvider>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
                 <fieldset>
                     <legend>Your avatar</legend>
                     <p>Pick a shape that feels like you</p>
@@ -56,6 +89,8 @@ export default function ProfileCreationPage() {
                         name="avatar"
                         value="willow"
                         aria-label="Willow avatar"
+                        checked={avatarKey === "willow"}
+                        onChange={(event) => setAvatarKey(event.target.value)}
                         required />
 
                         <label htmlFor="avatar-willow"
@@ -76,6 +111,8 @@ export default function ProfileCreationPage() {
                         name="avatar"
                         value="river"
                         aria-label="River avatar"
+                        checked ={avatarKey === "river"}
+                        onChange={(event) => setAvatarKey(event.target.value)}
                         />
                         <label
                         htmlFor="avatar-river"
@@ -97,7 +134,10 @@ export default function ProfileCreationPage() {
                         name="avatar"
                         value="ember"
                         aria-label="Ember avatar"
+                        checked={avatarKey === "ember"}
+                        onChange={(event) => setAvatarKey(event.target.value)}
                         />
+
                         <label
                         htmlFor="avatar-ember"
                         className="block cursor-pointer rounded-full peer-checked:ring-4 peer-checked:ring-orange-400"
@@ -118,7 +158,10 @@ export default function ProfileCreationPage() {
                         name="avatar"
                         value="nova"
                         aria-label="Nova avatar"
+                        checked={avatarKey === "nova"}
+                        onChange={(event) => setAvatarKey(event.target.value)}
                         />
+
                         <label
                         htmlFor="avatar-nova"
                         className="block cursor-pointer rounded-full peer-checked:ring-4 peer-checked:ring-orange-400"
@@ -158,7 +201,10 @@ export default function ProfileCreationPage() {
                     type="text"
                     placeholder="@quietwillow"
                     className="rounded-xl border border-gray-300 px-4 py-3 bg-[#f6efe4]"
+                    value={username}
+                    onChange={(event) => setUsername(event.target.value)}
                     />
+
                     <p className="text-sm text-gray-500">3-20 characters</p>
                 <div>
                     <div className="flex flex-col gap-2">
@@ -185,142 +231,28 @@ export default function ProfileCreationPage() {
                 </div>
 
                 <div className="flex flex-wrap items-center justify-center gap-2.5">
-                <div>
-                    <input id="community-depression"
-                    type="checkbox"
-                    value="depression"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("depression")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-depression">Depression</label>
-                </div>
+                    {communities.map((community) => (
+                    <div key={community.key}>
+                        <input
+                        id={`community-${community.key}`}
+                        type="checkbox"
+                        value={community.key}
+                        name="communities"
+                        className="peer sr-only"
+                        checked={selectedCommunities.includes(community.key)}
+                        onChange={handleCommunityChange} />
 
-                <div>
-                    <input id="community-anxiety"
-                    type="checkbox"
-                    value="anxiety"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("anxiety")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-anxiety">Anxiety</label>
+                        <label
+                        htmlFor={`community-${community.key}`}
+                        className="inline-block cursor-pointer rounded-full border px-4 py-2 peer-checked:bg-[#f29057] peer-checked:text-white">
+                            {community.label}
+                        </label>
+                        </div>
+                    ))}
                 </div>
-
-                <div>
-                    <input id="community-bpd"
-                    type="checkbox"
-                    value="bpd"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("bpd")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-bpd">BPD</label>
-                </div>
-
-                <div>
-                    <input id="community-bipolar"
-                    type="checkbox"
-                    value="bipolar"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("bipolar")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-bipolar">Bipolar</label>
-                </div>
-
-                <div>
-                    <input id="community-ptsd"
-                    type="checkbox"
-                    value="ptsd"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("ptsd")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-ptsd">PTSD</label>
-                </div>
-
-                <div>
-                    <input id="community-grief-loss"
-                    type="checkbox"
-                    value="grief-loss"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("grief-loss")}
-                    onChange={handleCommunityChange}/>
-                    <label htmlFor="community-grief-loss">Grief & Loss</label>
-                </div>
+                    <button type="submit"
+                    className="w-full rounded-xl bg-[#f29057] px-4 py-3 font-semibold text-white hover:bg-[#df7c45]">Join the community</button>
                 
-                <div>
-                    <input id="community-ocd"
-                    type="checkbox"
-                    value="ocd"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("ocd")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-ocd">OCD</label>
-                </div>
-
-                <div>
-                    <input id="community-adhd"
-                    type="checkbox"
-                    value="adhd"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("adhd")}
-                    onChange={handleCommunityChange} /> 
-                    <label htmlFor="community-adhd">ADHD</label>
-                </div>
-
-                <div>
-                    <input id="community-eating-recovery"
-                    type="checkbox"
-                    value="eating-recovery"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("eating-recovery")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-eating-recovery">Eating Recovery</label>
-                </div>
-
-                <div>
-                    <input id="community-burnout"
-                    type="checkbox"
-                    value="burnout"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("burnout")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-burnout">Burnout</label>
-                </div>
-
-                <div>
-                    <input id="community-loneliness"
-                    type="checkbox"
-                    value="loneliness"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("loneliness")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-loneliness">Loneliness</label>
-                </div>
-
-                <div>
-                    <input id="community-addiction-recovery"
-                    type="checkbox"
-                    value="addiction-recovery"
-                    name="communities"
-                    className="peer sr-only"
-                    checked={selectedCommunities.includes("addiction-recovery")}
-                    onChange={handleCommunityChange} />
-                    <label htmlFor="community-addiction-recovery">Addiction Recovery</label>
-                </div>
-                </div>
-
-                <div>
-                    <button type="submit">Join the community</button>
-                </div>
                 </div>
 
                 </form>
